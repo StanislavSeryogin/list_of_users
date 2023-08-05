@@ -7,14 +7,17 @@ class AppCircleAvatar extends StatelessWidget {
     super.key,
     required this.check,
     required this.pathImageNetwork,
+    required this.radiusCircle,
   });
 
   final bool check;
   final String pathImageNetwork;
+  final double radiusCircle;
+
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: 40,
+      radius: radiusCircle,
       backgroundImage: check
           ? NetworkImage(pathImageNetwork)
           : const AssetImage(kDefaultAvatarPath) as ImageProvider<Object>,
