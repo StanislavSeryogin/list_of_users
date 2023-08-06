@@ -1,16 +1,13 @@
-# list_of_users
+# Testing app LIST_OF_USERS
+### The program receives user data from a remote API and displays them on the main page in the form of cards. When a user clicks on a card, it takes them to a page with detailed information about that user.
 
-A new Flutter project.
+#
+### In this app I used packages:
+####  - state manager: *GetX*;
+####  - HTTP requests: *http*;
+####  - plugin for launching a URL: *url_launcher*;
+####  - local storage packages: *shared_preferences*;
 
-## Getting Started
+# 
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

@@ -1,55 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:list_of_users/controllers/all_users_page_controller.dart';
+import 'package:list_of_users/components/top_and_end_list_button.dart';
+import 'package:list_of_users/controllers/app_scroll_controller.dart';
+import 'package:list_of_users/controllers/app_users_page_controller.dart';
 import 'package:list_of_users/pages/selected_user_page.dart';
 import 'package:list_of_users/widgets/users_list_widget.dart';
 
-class AllUsersPage extends StatelessWidget {
-  AllUsersPage({super.key});
-
-  final AllUsersPageController allUsersController =
-      Get.put(AllUsersPageController());
+class AllUsersPage extends GetView<AppUsersPageController> {
+  const AllUsersPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final users = allUsersController.users;
-    final support = allUsersController.supportData;
+    final AppScrollController scrollController = Get.put(AppScrollController());
     return Scaffold(
       appBar: AppBar(
         title: const Text('User Data'),
       ),
       body: Obx(() {
-        if (users.isEmpty) {
+        if (controller.users.isEmpty) {
           return const CircularProgressIndicator();
         } else {
           return ListView.builder(
-            itemCount: users.length,
+            controller: scrollController.scrollController,
+            itemCount: controller.users.length + 1,
             itemBuilder: (context, index) {
-              return UsersListWidget(
-                goTo: () => Get.to(
-                  () => SelectedUserPage(
-                    id: users[index].id,
-                    checkImageAvatar: users[index].avatar.isNotEmpty,
-                    pathImageAvatar: users[index].avatar,
-                    firstName: users[index].firstName,
-                    lastName: users[index].lastName,
-                    email: users[index].email,
-                    supportText:
-                        support.value?.text ?? "No support data available.",
-                    supportUrl: support.value?.url ?? "No url link",
+              if (index == controller.users.length) {
+                // Reached the end of the list
+                controller.fetchMoreUsers();
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                return UsersListWidget(
+                  goTo: () => Get.to(
+                    () => SelectedUserPage(
+                      id: controller.users[index].id,
+                      pathImageAvatar: controller.users[index].avatar,
+                      firstName: controller.users[index].firstName,
+                      lastName: controller.users[index].lastName,
+                      email: controller.users[index].email,
+                      supportUrl:
+                          controller.supportData.value?.url ?? "No url link",
+                      supportText: controller.supportData.value?.text ??
+                          "No support data available.",
+                    ),
                   ),
-                ),
-                userId: users[index].id,
-                checkImageAvatar: users[index].avatar.isNotEmpty,
-                pathImageAvatar: users[index].avatar,
-                firstName: users[index].firstName,
-                lastName: users[index].lastName,
-                email: users[index].email,
-              );
+                  userId: controller.users[index].id,
+                  pathImageAvatar: controller.users[index].avatar,
+                  firstName: controller.users[index].firstName,
+                  lastName: controller.users[index].lastName,
+                  email: controller.users[index].email,
+                );
+              }
             },
           );
         }
       }),
+      floatingActionButton:
+          TopAndEndListButton(scrollController: scrollController),
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:list_of_users/components/app_circle_avatar.dart';
+import 'package:list_of_users/components/app_circle_avatar_widget.dart';
 import 'package:list_of_users/utilities/constants.dart';
 import 'package:list_of_users/widgets/user_details_widget.dart';
 
@@ -7,7 +7,6 @@ class UsersListWidget extends StatelessWidget {
   const UsersListWidget({
     super.key,
     required this.goTo,
-    required this.checkImageAvatar,
     required this.pathImageAvatar,
     required this.firstName,
     required this.lastName,
@@ -17,7 +16,6 @@ class UsersListWidget extends StatelessWidget {
 
   final VoidCallback goTo;
   final int userId;
-  final bool checkImageAvatar;
   final String pathImageAvatar;
   final String firstName;
   final String lastName;
@@ -40,8 +38,7 @@ class UsersListWidget extends StatelessWidget {
           children: [
             Hero(
               tag: userId,
-              child: AppCircleAvatar(
-                check: checkImageAvatar,
+              child: AppCircleAvatarWidget(
                 pathImageNetwork: pathImageAvatar,
                 radiusCircle: 40,
               ),

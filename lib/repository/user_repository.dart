@@ -9,33 +9,20 @@ class UserRepository {
 
   UserRepository(this.httpClient);
 
-  Future<Map<String, dynamic>> getUsers() async {
-  final response = await httpClient.get(Uri.parse(kUsersURL));
+  Future<Map<String, dynamic>> getUsers({int page = 1}) async {
+    final response = await httpClient.get(Uri.parse("$kUsersURL?page=$page"));
 
-  if (response.statusCode == 200) {
-    final jsonData = json.decode(response.body);
-    List<dynamic> usersData = jsonData['data'];
-    SupportData supportData = SupportData.fromJson(jsonData['support']);
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      List<dynamic> usersData = jsonData['data'];
+      SupportData supportData = SupportData.fromJson(jsonData['support']);
 
-    return {
-      'users': usersData.map((user) => UserData.fromJson(user)).toList(),
-      'support': supportData
-    };
-  } else {
-    throw Exception('Failed to load users');
+      return {
+        'users': usersData.map((user) => UserData.fromJson(user)).toList(),
+        'support': supportData
+      };
+    } else {
+      throw Exception('Failed to load users');
+    }
   }
-}
-
-
-  // Future<List<UserData>> getUsers() async {
-  //   final response = await httpClient.get(Uri.parse(kUsersURL));
-
-  //   if (response.statusCode == 200) {
-  //     final jsonData = json.decode(response.body);
-  //     List<dynamic> usersData = jsonData['data'];
-  //     return usersData.map((user) => UserData.fromJson(user)).toList();
-  //   } else {
-  //     throw Exception('Failed to load users');
-  //   }
-  // }
 }

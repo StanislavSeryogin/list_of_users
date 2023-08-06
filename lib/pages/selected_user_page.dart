@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:list_of_users/components/app_circle_avatar.dart';
+import 'package:list_of_users/components/app_circle_avatar_widget.dart';
+import 'package:list_of_users/components/app_link_widget.dart';
+import 'package:list_of_users/components/app_text_widget.dart';
 import 'package:list_of_users/utilities/constants.dart';
 
 class SelectedUserPage extends StatelessWidget {
   const SelectedUserPage({
     super.key,
     required this.id,
-    required this.checkImageAvatar,
     required this.pathImageAvatar,
     required this.firstName,
     required this.lastName,
@@ -17,7 +18,6 @@ class SelectedUserPage extends StatelessWidget {
   });
 
   final int id;
-  final bool checkImageAvatar;
   final String pathImageAvatar;
   final String firstName;
   final String lastName;
@@ -53,43 +53,51 @@ class SelectedUserPage extends StatelessWidget {
                   children: [
                     Hero(
                       tag: id,
-                      child: AppCircleAvatar(
-                        check: checkImageAvatar,
+                      child: AppCircleAvatarWidget(
                         pathImageNetwork: pathImageAvatar,
                         radiusCircle: 100,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20.0),
-                Text(
-                  'ID: $id',
-                  style: const TextStyle(fontSize: 20),
+                const SizedBox(height: 10.0),
+                const AppTextWidget(
+                  text: 'Main Info',
+                  fontSize: 30,
                 ),
-                const SizedBox(height: 20.0),
-                Text(
-                  'First Name: $firstName',
-                  style: const TextStyle(fontSize: 20),
+                AppTextWidget(
+                  text: 'User id: $id',
+                  fontSize: 20,
+                ),
+                AppTextWidget(
+                  text: 'First Name: $firstName',
+                  fontSize: 20,
+                ),
+                AppTextWidget(
+                  text: 'Last Name: $lastName',
+                  fontSize: 20,
+                ),
+                AppTextWidget(
+                  text: 'Email: $email',
+                  fontSize: 20,
                 ),
                 const SizedBox(height: 10.0),
-                Text(
-                  'Last Name: $lastName',
-                  style: const TextStyle(fontSize: 20),
+                const AppTextWidget(
+                  text: 'Support',
+                  fontSize: 30,
                 ),
-                const SizedBox(height: 10.0),
-                Text(
-                  'Email: $email',
-                  style: const TextStyle(fontSize: 20),
+                Row(
+                  children: [
+                    const AppTextWidget(
+                      text: 'Email: ',
+                      fontSize: 20,
+                    ),
+                    Expanded(child: AppLinkWidget(supportUrl: supportUrl))
+                  ],
                 ),
-                const SizedBox(height: 20.0),
-                Text(
-                  'Email: $supportUrl',
-                  style: const TextStyle(fontSize: 20),
-                ),
-                const SizedBox(height: 10.0),
-                Text(
-                  'Email: $supportText',
-                  style: const TextStyle(fontSize: 20),
+                AppTextWidget(
+                  text: 'Support: $supportText',
+                  fontSize: 20,
                 ),
               ],
             ),
